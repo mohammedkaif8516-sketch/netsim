@@ -28,10 +28,10 @@ const t = (
 ): Ticket => ({ id, priority, category, subject, reporter, deptId, slaSec, ageMin, description, assignee, scenarioId });
 
 export const tickets: Ticket[] = [
-  t("INC-2841", "P1", "DHCP / Services", "New starters cannot connect", "Maya Patel", "blr-hr", 522, 6,
-    "Three new starters in HR are unable to get online. Their laptops show a self-assigned address, and onboarding is blocked.", "me", "dhcp-pool"),
+    t("INC-2841", "P1", "DHCP / Services", "New starters cannot connect", "Maya Patel", "blr-hr", 522, 6,
+    "Three new starters in HR are unable to get online. Their laptops show a self-assigned address. The HR network is supposed to use the 10.10.20.0/24 range.", "me", "dhcp-pool"),
   t("INC-2838", "P2", "Routing", "Finance cannot reach ERP", "Jonah Brooks", "aus-fin", 1456, 18,
-    "Finance workstations can reach local services but the ERP application in the data center is timing out."),
+    "Finance workstations can reach local services but the ERP application in the data center is timing out.","me","finance-erp"),
   t("INC-2835", "P2", "Switching / VLAN", "Warehouse scanners offline", "Lena Fischer", "muc-wh", 1868, 23,
     "Handheld scanners lost connectivity after a switch replacement. Wired office PCs still appear to be working."),
   t("INC-2829", "P3", "Connectivity", "Meeting room printer unreachable", "Aarav Shah", "blr-sales", 4353, 41,

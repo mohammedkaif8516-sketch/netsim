@@ -48,10 +48,31 @@ export function NetworkLab({ ticket, scenario, store, passed, total, onBack }: P
               <span key={s.where}>{s.where}: {s.commands.map((c, i) => <span key={c}>{i > 0 && " · "}<code>{c}</code></span>)}</span>
             ))}
           </div>
-          <div className="lab-hints">
-            {scenario.hints.slice(0, hints).map((h, i) => <span key={i}>Hint {i + 1}: {h}</span>)}
-            {hints < scenario.hints.length && <button className="quiet-button" onClick={() => setHints(hints + 1)}>{hints ? "Another hint" : "Need a hint?"}</button>}
+
+          {/* 👇 REPLACE THE OLD HINT BLOCK WITH THIS 👇 */}
+          <div className="lab-hints-container" style={{ marginBottom: "12px" }}>
+            {hints > 0 && (
+              <div className="lab-hint-box">
+                {scenario.hints.slice(0, hints).map((h, i) => (
+                  <div key={i}>
+                    <strong>Hint {i + 1}</strong>
+                    <div>{h}</div>
+                  </div>
+                ))}
+              </div>
+            )}
+            
+            <div style={{ display: "flex", gap: "8px", alignItems: "center", marginTop: "8px" }}>
+              <button 
+                className="quiet-button" 
+                onClick={() => setHints(hints + 1)}
+                disabled={hints >= scenario.hints.length}
+              >
+                {hints === 0 ? "Need a hint?" : hints >= scenario.hints.length ? "No more hints" : "Next hint"}
+              </button>
+            </div>
           </div>
+
           <div className="simulator-frame">
             <NetLab title={scenario.canvas.title} width={scenario.canvas.width} height={scenario.canvas.height} store={store}>
               <scenario.Topology />
