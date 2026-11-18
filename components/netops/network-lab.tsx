@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { NetLab, type Store } from "@/components/simulator/netsim";
-import type { Ticket } from "./data/tickets";
-import { placeOf } from "./data/world";
-import type { Scenario } from "./scenarios/types";
+import { NetLab, type Store } from "@/lib/engine/netsim";
+import type { Ticket } from "@/lib/data/tickets";
+import { placeOf } from "@/lib/data/world";
+import type { Scenario } from "@/lib/scenarios/types";
 
 interface Props {
   ticket: Ticket;

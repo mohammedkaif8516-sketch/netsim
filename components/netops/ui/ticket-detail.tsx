@@ -1,11 +1,11 @@
 "use client";
 
 import { ArrowRight, Bell, Check, Clock3, Menu, Settings2, ShieldCheck } from "lucide-react";
-import type { Ticket } from "../data/tickets";
-import { locationLabel, placeOf } from "../data/world";
-import type { Scenario } from "../scenarios/types";
-import { fmtAge, fmtSla } from "../state/format";
-import { secondsLeft, useGame } from "../state/game-store";
+import type { Ticket } from "@/lib/data/tickets";
+import { locationLabel, placeOf } from "@/lib/data/world";
+import type { Scenario } from "@/lib/scenarios/types";
+import { fmtAge, fmtSla } from "@/lib/state/format";
+import { secondsLeft, useGame } from "@/lib/state/game-store";
 import { Checklist } from "./checklist";
 
 export function TicketDetail({ ticket, scenario, results }: { ticket: Ticket; scenario?: Scenario; results: boolean[] }) {

@@ -7,7 +7,7 @@
  * Each bundle has: global / ifc / priv command lists, modes(m) for the extra config sub-modes,
  * render(d) for global running-config lines and renderIf(i) for per-interface lines.
  */
-import type { Dev, E, Iface } from "@/components/simulator/netsim";
+import type { Dev, E, Iface } from "@/lib/engine/netsim";
 import { aclGlobalX, aclIfX, aclPrivX, aclModeX, renderAcls, ifAcl } from "./Acl";
 import { natGlobalX, natIfX, natPrivX, renderNat, ifNat } from "./Nat";
 import { fhrpIfX, fhrpPrivX, ifFhrp } from "./Fhrp";

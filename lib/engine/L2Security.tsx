@@ -25,7 +25,7 @@ import {
   parseVlans,
   rangeStr,
   macColon,
-} from "@/components/simulator/netsim";
+} from "@/lib/engine/netsim";
 
 const noop: H = () => {};
 const MAC = /^[0-9a-f]{4}\.[0-9a-f]{4}\.[0-9a-f]{4}$/i;

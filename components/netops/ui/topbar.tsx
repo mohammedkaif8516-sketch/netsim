@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { Activity, Bell, Check, ChevronDown, Pause, Play, ShieldCheck, X } from "lucide-react";
-import { BASE_RESOLVED_TODAY, levelInfo, slaHealth, useGame } from "../state/game-store";
-import { fmtClock } from "../state/format";
+import { BASE_RESOLVED_TODAY, levelInfo, slaHealth, useGame } from "@/lib/state/game-store";
+import { fmtClock } from "@/lib/state/format";
 
 export function Topbar() {
   const { xp, now, paused, togglePause, resolved, notes, readNotes } = useGame();

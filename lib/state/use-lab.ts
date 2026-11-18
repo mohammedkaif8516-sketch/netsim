@@ -1,7 +1,7 @@
 "use client";
 import { useMemo, useSyncExternalStore } from "react";
-import { createStore, type Store } from "@/components/simulator/netsim";
-import type { Check } from "../scenarios/types";
+import { createStore, type Store } from "@/lib/engine/netsim";
+import type { Check } from "@/lib/scenarios/types";
 
 /** a fresh simulator store per ticket (a new ticket = a fresh lab) */
 export const useLabStore = (ticketId: string): Store => useMemo(() => createStore(), [ticketId]);

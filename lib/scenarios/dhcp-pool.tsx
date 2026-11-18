@@ -8,10 +8,10 @@
  *
  * Fix:   ip dhcp pool HR  ->  network 10.10.20.0 255.255.255.0   then   ip dhcp   on both laptops.
  */
-import Router from "@/components/simulator/Router";
-import Switch from "@/components/simulator/Switch";
-import VPC from "@/components/simulator/VPC";
-import { Cable, netOf, probe, type State } from "@/components/simulator/netsim";
+import Router from "@/lib/engine/Router";
+import Switch from "@/lib/engine/Switch";
+import VPC from "@/lib/engine/VPC";
+import { Cable, netOf, probe, type State } from "@/lib/engine/netsim";
 import type { Scenario } from "./types";
 
 const GW = "HR-GW";

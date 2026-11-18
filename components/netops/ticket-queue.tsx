@@ -2,10 +2,10 @@
 
 import { useMemo, useState } from "react";
 import { ArrowDownUp, Clock3, MapPin, Search, ShieldAlert } from "lucide-react";
-import { tickets, priorityLabel, type Ticket } from "./data/tickets";
-import { locationLabel, placeOf } from "./data/world";
-import { fmtAge, fmtSla } from "./state/format";
-import { secondsLeft, useGame, type Sort } from "./state/game-store";
+import { tickets, priorityLabel, type Ticket } from "@/lib/data/tickets";
+import { locationLabel, placeOf } from "@/lib/data/world";
+import { fmtAge, fmtSla } from "@/lib/state/format";
+import { secondsLeft, useGame, type Sort } from "@/lib/state/game-store";
 
 const SORTS: Sort[] = ["sla", "priority", "age"];
 const SORT_LABEL: Record<Sort, string> = { sla: "SLA", priority: "priority", age: "newest" };

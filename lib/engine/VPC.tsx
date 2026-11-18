@@ -10,7 +10,7 @@
 import {
   type Dev, type Engine, type Ctx, type Fx, DeviceNode, newDev, preconfigure, registerEngine, useRegister, useDev,
   isIp, isMask, lenMask, maskLen, netOf, macOf, macColon, probe, traceRoute, snapshot, restore,
-} from "@/components/simulator/netsim";
+} from "@/lib/engine/netsim";
 
 import { dhcpClient, dhcpRelease } from "@/components/labcp/Dhcp";
 export function VPCIcon({ size = 56 }: { size?: number }) {

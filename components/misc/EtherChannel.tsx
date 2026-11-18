@@ -17,7 +17,7 @@ import {
   ifUp,
   peerOf,
   shortIf,
-} from "@/components/simulator/netsim";
+} from "@/lib/engine/netsim";
 
 const MODES = ["active", "passive", "desirable", "auto", "on"] as const;
 const L2KEYS = ["mode", "vlan", "allowed", "native", "nonegotiate"] as const;

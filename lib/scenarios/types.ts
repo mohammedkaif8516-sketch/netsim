@@ -1,5 +1,5 @@
 import type { ComponentType } from "react";
-import type { State } from "@/components/simulator/netsim";
+import type { State } from "@/lib/engine/netsim";
 
 /** a live, pure test against the simulator state. It re-runs on every CLI command. */
 export interface Check {

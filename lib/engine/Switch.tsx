@@ -41,7 +41,7 @@ import {
   ip2n,
   isL3,
   bundleState,
-} from "@/components/simulator/netsim";
+} from "@/lib/engine/netsim";
 import {
   ipRoute,
   noRoute,

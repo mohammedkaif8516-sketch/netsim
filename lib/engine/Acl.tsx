@@ -17,7 +17,7 @@ import {
   hooks,
   isIp,
   ip2n,
-} from "@/components/simulator/netsim";
+} from "@/lib/engine/netsim";
 
 const noop: H = () => {};
 const PORTS: Record<string, number> = {

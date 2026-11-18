@@ -2,10 +2,10 @@
 
 import { useEffect } from "react";
 import { BookOpen, CircleHelp, Pause } from "lucide-react";
-import { ticketById, tickets, type Ticket } from "./data/tickets";
-import { scenarioFor } from "./scenarios";
-import { useGame } from "./state/game-store";
-import { useCheckResults, useLabStore } from "./state/use-lab";
+import { ticketById, tickets, type Ticket } from "@/lib/data/tickets";
+import { scenarioFor } from "@/lib/scenarios";
+import { useGame } from "@/lib/state/game-store";
+import { useCheckResults, useLabStore } from "@/lib/state/use-lab";
 import { TicketQueue } from "./ticket-queue";
 import { NetworkLab } from "./network-lab";
 import { WorldMap } from "./world-map";

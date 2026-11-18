@@ -34,7 +34,7 @@ import {
   ip2n,
   n2ip,
   macOf,
-} from "@/components/simulator/netsim";
+} from "@/lib/engine/netsim";
 
 /* ───────────── helpers ───────────── */
 const cfgOf = (c: Ctx) => (c.dev.dhcp ??= { pools: {}, excluded: [] });

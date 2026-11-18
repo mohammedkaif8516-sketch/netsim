@@ -11,7 +11,7 @@
  */
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-import { tickets } from "../data/tickets";
+import { tickets } from "@/lib/data/tickets";
 
 export const BASE_RESOLVED_TODAY = 12;
 export const START_XP = 640;

@@ -38,7 +38,7 @@ import {
   shortIf,
   classLen,
   ip2n,
-} from "@/components/simulator/netsim";
+} from "@/lib/engine/netsim";
 import { dhcpGlobalX, dhcpPoolX, dhcpPrivX, renderDhcp } from "@/components/labcp/Dhcp";
 
 import {

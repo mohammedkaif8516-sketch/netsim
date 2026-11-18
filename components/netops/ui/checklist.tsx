@@ -1,6 +1,6 @@
 "use client";
 import { Check, Sparkles } from "lucide-react";
-import type { Check as CheckDef } from "../scenarios/types";
+import type { Check as CheckDef } from "@/lib/scenarios/types";
 
 export function Checklist({ checks, results }: { checks?: CheckDef[]; results: boolean[] }) {
   return (

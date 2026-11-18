@@ -2,10 +2,10 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, Building2, ChevronRight, Clock3, Globe2, MapPin, Network, RadioTower } from "lucide-react";
-import { tickets, type Ticket } from "./data/tickets";
-import { placeOf, world } from "./data/world";
-import { fmtSla } from "./state/format";
-import { secondsLeft, useGame } from "./state/game-store";
+import { tickets, type Ticket } from "@/lib/data/tickets";
+import { placeOf, world } from "@/lib/data/world";
+import { fmtSla } from "@/lib/state/format";
+import { secondsLeft, useGame } from "@/lib/state/game-store";
 
 type Path = { country?: string; city?: string; building?: string; dept?: string };
 type Level = "world" | "country" | "city" | "building" | "department";
