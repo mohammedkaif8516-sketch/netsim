@@ -190,3 +190,74 @@ button { font: inherit; }
 .notes-popover small { color: #8ea0b0; }
 .lab-hints { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 0 0 8px; font-size: 10px; color: #a8b5c1; }
 .lab-empty { display: grid; place-items: center; gap: 8px; text-align: center; padding: 48px 16px; color: #a8b5c1; }
+/* Append to app/globals.css — Knowledge base drawer + Topology view. */
+.kb-backdrop { position: fixed; inset: 0; background: #02060acc; z-index: 60; }
+.kb-drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(460px, 100vw); z-index: 61; display: flex; flex-direction: column; background: #0b121a; border-left: 1px solid #1e2a36; color: #e5edf5; font-size: 12px; box-shadow: -18px 0 40px #0008; }
+.kb-head { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid #1e2a36; }
+.kb-title { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700; }
+.kb-title svg { width: 16px; height: 16px; color: #2dd4bf; }
+.kb-tabs { display: flex; gap: 4px; padding: 8px 12px 0; border-bottom: 1px solid #1e2a36; }
+.kb-tabs button { padding: 8px 12px; background: none; border: 0; border-bottom: 2px solid transparent; color: #8ea0b0; font-size: 12px; cursor: pointer; }
+.kb-tabs button.on { color: #e5edf5; border-bottom-color: #2dd4bf; }
+.kb-filters { display: grid; gap: 8px; padding: 12px 16px; border-bottom: 1px solid #1e2a36; }
+.kb-search { display: flex; align-items: center; gap: 8px; padding: 7px 10px; background: #0d141c; border: 1px solid #202a35; border-radius: 6px; color: #8ea0b0; }
+.kb-search input { flex: 1; background: none; border: 0; outline: 0; color: #e5edf5; font-size: 12px; }
+.kb-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.kb-chips button { position: relative; padding: 4px 10px; background: #0d141c; border: 1px solid #202a35; border-radius: 99px; color: #a8b5c1; font-size: 11px; cursor: pointer; }
+.kb-chips button.on { background: #12332f; border-color: #2dd4bf; color: #e5edf5; }
+.kb-chips button i { display: inline-block; width: 5px; height: 5px; margin-left: 6px; border-radius: 50%; background: #f5a623; vertical-align: middle; }
+.kb-body { flex: 1; overflow: auto; padding: 12px 16px 28px; display: grid; gap: 10px; align-content: start; }
+.kb-section { margin: 8px 0 0; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #2dd4bf; }
+.kb-section small { margin-left: 8px; color: #8ea0b0; letter-spacing: 0; text-transform: none; }
+.kb-entry { padding: 11px 12px; background: #0f1822; border: 1px solid #1e2a36; border-radius: 8px; display: grid; gap: 6px; }
+.kb-entry p { margin: 0; color: #c3cdd7; line-height: 1.45; }
+.kb-entry-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.kb-cmd { font-family: ui-monospace, monospace; font-size: 12px; color: #7ee8d8; word-break: break-word; }
+.kb-tag { flex: none; padding: 2px 7px; border-radius: 99px; font-size: 9px; letter-spacing: .06em; text-transform: uppercase; background: #1a2430; color: #a8b5c1; }
+.kb-tag-router { color: #7cb7ff; } .kb-tag-switch { color: #c9a6ff; } .kb-tag-host { color: #8fe3a8; }
+.kb-tip { color: #f0c36a !important; font-size: 11px; }
+.kb-example { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.kb-mode { color: #8ea0b0; font-size: 10px; }
+.kb-copy { display: inline-flex; align-items: center; gap: 8px; padding: 4px 8px; background: #0a1017; border: 1px solid #202a35; border-radius: 5px; color: #e5edf5; cursor: pointer; }
+.kb-copy code { font-family: ui-monospace, monospace; font-size: 11px; }
+.kb-copy:hover { border-color: #2dd4bf; }
+.kb-empty { color: #8ea0b0; text-align: center; padding: 28px 0; }
+.kb-guide h3 { margin: 16px 0 6px; font-size: 12px; color: #2dd4bf; letter-spacing: .06em; text-transform: uppercase; }
+.kb-guide h3:first-child { margin-top: 2px; }
+.kb-guide ol, .kb-guide ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; color: #c3cdd7; line-height: 1.45; }
+.kb-guide code { font-family: ui-monospace, monospace; font-size: 11px; color: #7ee8d8; }
+.kb-guide .kb-tip { margin: 10px 0 0; }
+.topo-wrap { display: grid; gap: 8px; padding: 10px 14px 14px; }
+.topo-bar { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; font-size: 11px; color: #c3cdd7; }
+.topo-legend { display: inline-flex; align-items: center; gap: 6px; color: #8ea0b0; margin-left: auto; }
+.topo-legend i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-left: 8px; }
+.topo-checks { padding: 2px 8px; border: 1px solid #2dd4bf66; border-radius: 99px; color: #7ee8d8; }
+.topo-svg { width: 100%; height: min(420px, 52vh); background: #0a1017; border: 1px solid #1e2a36; border-radius: 8px; }
+.topo-empty { padding: 56px 16px; text-align: center; color: #8ea0b0; }
+/* Append to app/globals.css — scrollable ticket queue, visible search bar, tighter XP block. */
+
+/* If you set `zoom` on .netops-shell, set --z to the same number (e.g. zoom: 1.4; --z: 1.4;) so heights fit the screen. */
+.netops-shell { --z: 1; }
+
+/* the queue keeps a fixed height and scrolls inside, instead of stretching the whole page */
+.queue-panel { position: sticky; top: calc(8px / var(--z)); align-self: start; min-height: 0; max-height: calc((100vh - 16px) / var(--z)); }
+.queue-list { overflow-y: auto; min-height: 0; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #2a3643 transparent; }
+.queue-list::-webkit-scrollbar { width: 6px; }
+.queue-list::-webkit-scrollbar-thumb { background: #2a3643; border-radius: 6px; }
+/* stacked (narrow) layout: still scroll inside the queue, don't push everything else down */
+@media (max-width: 800px) { .queue-panel { position: static; max-height: 75vh; } }
+
+/* search */
+.queue-searchbar { display: flex; align-items: center; gap: 8px; margin: 0 12px 10px; padding: 7px 10px; background: #0a1017; border: 1px solid #202a35; border-radius: 6px; color: #8ea0b0; }
+.queue-searchbar:focus-within { border-color: #2dd4bf; }
+.queue-searchbar input { flex: 1; min-width: 0; background: none; border: 0; outline: 0; color: #e5edf5; font-size: 12px; }
+.queue-searchbar input::-webkit-search-cancel-button { display: none; }
+.queue-clear { display: grid; place-items: center; width: 18px; height: 18px; background: #1a2430; border: 0; border-radius: 50%; color: #c3cdd7; cursor: pointer; }
+.queue-controls { flex-wrap: wrap; row-gap: 6px; }
+.queue-count { padding: 7px 14px; border-bottom: 1px solid #202a35; color: #8ea0b0; font-size: 10px; }
+.queue-empty { display: grid; justify-items: center; gap: 8px; padding: 32px 16px; text-align: center; color: #8ea0b0; }
+.queue-empty b { color: #e5edf5; }
+
+/* the LEVEL / tickets line must not wrap on narrow screens */
+.xp-copy span { white-space: nowrap; }
+.xp-block { width: 150px; }

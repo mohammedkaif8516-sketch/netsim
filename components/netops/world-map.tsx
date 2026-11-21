@@ -6,14 +6,26 @@ import { tickets, type Ticket } from "@/lib/data/tickets";
 import { placeOf, world } from "@/lib/data/world";
 import { fmtSla } from "@/lib/state/format";
 import { secondsLeft, useGame } from "@/lib/state/game-store";
+import { snapshot } from "@/lib/state/health";
+import type { Store } from "@/lib/engine/netsim";
+import type { Scenario } from "@/lib/scenarios/types";
+import { TopologyView } from "./ui/topology-view";
 
 type Path = { country?: string; city?: string; building?: string; dept?: string };
 type Level = "world" | "country" | "city" | "building" | "department";
 const BUILDING_POS = [{ x: 47, y: 54 }, { x: 19, y: 27 }, { x: 74, y: 28 }];
 
 /** Everything here is derived from data/world.ts and the live ticket state. Nothing is hardcoded to one city. */
-export function WorldMap({ ticket, onOpenTicket }: { ticket: Ticket; onOpenTicket: (t: Ticket) => void }) {
-  const { resolved, now, deadlines } = useGame();
+interface WorldMapProps {
+  ticket: Ticket;
+  onOpenTicket: (t: Ticket) => void;
+  /** the selected ticket's live lab, for the Topology view */
+  store: Store;
+  scenario?: Scenario;
+  results: boolean[];
+}
+export function WorldMap({ ticket, onOpenTicket, store, scenario, results }: WorldMapProps) {
+  const { resolved, now, deadlines, mapMode, setMapMode } = useGame();
   const [path, setPath] = useState<Path>({});
 
   // when a ticket is picked from the queue, move the map to its building
@@ -36,6 +48,7 @@ export function WorldMap({ ticket, onOpenTicket }: { ticket: Ticket; onOpenTicke
   const openBuilding = (id: string) => openIn((t) => placeOf(t.deptId).building.id === id);
   const openDept = (id: string) => openIn((t) => t.deptId === id);
   const worldOpen = openIn(() => true);
+  const health = snapshot(resolved);
 
   const crumbs: { label: string; to: Path }[] = [{ label: "World", to: {} }];
   if (country) crumbs.push({ label: country.name, to: { country: country.id } });
@@ -52,12 +65,16 @@ export function WorldMap({ ticket, onOpenTicket }: { ticket: Ticket; onOpenTicke
       <div className="map-header">
         <div>
           <p className="eyebrow">GLOBAL NETWORK · <span className="live-label"><i /> LIVE</span></p>
-          <h1>{title}</h1>
-          <p className="map-subtitle">{level === "world" ? "Select an active region to investigate its network." : "Drill down to the affected team and open the network lab."}</p>
+          <h1>{mapMode === "topology" ? "Network topology" : title}</h1>
+          <p className="map-subtitle">{mapMode === "topology" ? `${ticket.id} · ${placeOf(ticket.deptId).dept.name}. Live state of the affected network.` : level === "world" ? "Select an active region to investigate its network." : "Drill down to the affected team and open the network lab."}</p>
         </div>
-        <div className="map-view-toggle"><button className="view-button selected"><Globe2 /> Map</button><button className="view-button" disabled title="Topology view is not built yet"><Network /> Topology</button></div>
+        <div className="map-view-toggle"><button className={`view-button ${mapMode === "map" ? "selected" : ""}`} onClick={() => setMapMode("map")} aria-pressed={mapMode === "map"}><Globe2 /> Map</button><button className={`view-button ${mapMode === "topology" ? "selected" : ""}`} onClick={() => setMapMode("topology")} aria-pressed={mapMode === "topology"}><Network /> Topology</button></div>
       </div>
 
+      {mapMode === "topology" ? (
+        <TopologyView store={store} ticketId={ticket.id} scenario={scenario} results={results} />
+      ) : (
+        <>
       <nav className="breadcrumbs" aria-label="Map breadcrumbs">
         {level !== "world" && <button className="back-button" onClick={up} aria-label="Go back"><ArrowLeft /></button>}
         {crumbs.map((c, i) => (
@@ -88,7 +105,7 @@ export function WorldMap({ ticket, onOpenTicket }: { ticket: Ticket; onOpenTicke
             );
           })}
           <div className="map-caption"><span className="legend-live" />Active site <span className="legend-ticket" />Open incident</div>
-          <div className="map-callout"><span className="callout-icon"><RadioTower /></span><span><b>{worldOpen ? `${worldOpen} open incidents` : "Core network healthy"}</b><small>{world.reduce((a, c) => a + c.cities.reduce((b, x) => b + x.sites, 0), 0)} sites reporting</small></span><span className="uptime">99.98% <small>UPTIME</small></span></div>
+          <div className="map-callout"><span className="callout-icon"><RadioTower /></span><span><b>{worldOpen ? `${worldOpen} open incidents` : "Core network healthy"}</b><small>{health.sitesConnected} of {health.sitesTotal} sites reporting</small></span><span className="uptime">{health.availability.toFixed(2)}% <small>UPTIME</small></span></div>
         </>}
 
         {level === "country" && country && <>
@@ -152,7 +169,9 @@ export function WorldMap({ ticket, onOpenTicket }: { ticket: Ticket; onOpenTicke
           </div>
         )}
       </div>
-      <div className="map-bottom"><span><span className="status-dot" /> {worldOpen ? `${worldOpen} incidents open` : "All systems operational"}</span><span>Network map · updated just now</span></div>
+        </>
+      )}
+      <div className="map-bottom"><span><span className="status-dot" /> {worldOpen ? `${worldOpen} incidents open` : "All systems operational"}</span><span>{mapMode === "topology" ? "Topology · live" : "Network map · updated just now"}</span></div>
     </section>
   );
 }
