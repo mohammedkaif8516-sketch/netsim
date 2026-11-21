@@ -6,6 +6,8 @@ import { tickets, priorityLabel, type Ticket } from "@/lib/data/tickets";
 import { locationLabel, placeOf } from "@/lib/data/world";
 import { fmtAge, fmtSla } from "@/lib/state/format";
 import { secondsLeft, useGame, type Filter, type Sort } from "@/lib/state/game-store";
+import { peekSnapshot, useSnapshotVersion } from "@/lib/state/lab-snapshots";
+import { scenarioFor } from "@/lib/scenarios";
 
 const SORTS: Sort[] = ["sla", "priority", "age"];
 const SORT_LABEL: Record<Sort, string> = { sla: "SLA (soonest first)", priority: "priority", age: "newest first" };
@@ -22,6 +24,20 @@ export function TicketQueue() {
   const list = useRef<HTMLDivElement>(null);
 
   const left = (t: Ticket) => secondsLeft(deadlines[t.id], now, t.slaSec);
+
+  // how far you got on tickets you started and left: checks are re-run against each saved lab
+  const snapVersion = useSnapshotVersion();
+  const progress = useMemo(() => {
+    const out: Record<string, { passed: number; total: number }> = {};
+    for (const t of tickets) {
+      const sc = scenarioFor(t), snap = peekSnapshot(t.id);
+      if (!sc || !snap || !snap.touched) continue;
+      const state = { devs: snap.devs, links: snap.links };
+      const results = sc.checks.map((c) => { try { return c.test(state); } catch { return false; } });
+      out[t.id] = { passed: results.filter(Boolean).length, total: results.length };
+    }
+    return out;
+  }, [snapVersion]);
 
   const visible = useMemo(() => {
     // every word you type must match somewhere: "bengaluru p1", "vlan warehouse", "resolved"
@@ -101,6 +117,7 @@ export function TicketQueue() {
               <span className={`ticket-sla ${t.priority === "P1" && !done ? "sla-urgent" : ""}`}>
                 <Clock3 /> {done ? "Closed" : breached ? `SLA breached ${fmtSla(secs)}` : `SLA ${fmtSla(secs)}`} <span className="priority-word">{priorityLabel[t.priority]}</span>
               </span>
+              {!done && progress[t.id] && <span className="ticket-progress">▶ In progress · {progress[t.id].passed}/{progress[t.id].total} checks</span>}
             </button>
           );
         })}

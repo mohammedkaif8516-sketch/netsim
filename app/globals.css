@@ -261,3 +261,55 @@ button { font: inherit; }
 /* the LEVEL / tickets line must not wrap on narrow screens */
 .xp-copy span { white-space: nowrap; }
 .xp-block { width: 150px; }
+
+/* Append to app/globals.css — Incident debrief modal + Logbook drawer. (The drawer reuses the .kb-* styles from netops-extra-2.css.) */
+.debrief { position: fixed; inset: 0; margin: auto; z-index: 61; width: min(740px, 94vw); height: fit-content; max-height: min(88vh, 900px); display: flex; flex-direction: column; background: #0b121a; border: 1px solid #1e2a36; border-radius: 12px; color: #e5edf5; font-size: 12px; box-shadow: 0 24px 60px #000a; }
+.db-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; padding: 16px 18px 12px; border-bottom: 1px solid #1e2a36; }
+.db-head h2 { margin: 4px 0 4px; font-size: 17px; }
+.db-head small { color: #8ea0b0; }
+.db-body { overflow: auto; padding: 14px 18px 8px; display: grid; gap: 10px; align-content: start; }
+.db-body h3 { margin: 12px 0 0; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #2dd4bf; display: flex; align-items: center; gap: 6px; }
+.db-body p { margin: 0; color: #c3cdd7; line-height: 1.5; }
+.db-body code, .db-body pre { font-family: ui-monospace, monospace; }
+.db-result { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 12px 14px; background: #0f1822; border: 1px solid #1e2a36; border-radius: 10px; }
+.db-result > div:first-child { display: flex; align-items: center; gap: 12px; font-size: 16px; }
+.db-stars { font-size: 20px; letter-spacing: 2px; color: #f5c451; white-space: nowrap; }
+.db-stars i { font-style: normal; color: #2a3643; }
+.db-result dl { display: flex; gap: 22px; margin: 0; }
+.db-result dt { font-size: 9px; letter-spacing: .08em; text-transform: uppercase; color: #8ea0b0; }
+.db-result dd { margin: 2px 0 0; font-size: 14px; font-weight: 700; }
+.db-result dd.good { color: #2dd4bf; } .db-result dd.bad { color: #ff6b6b; }
+.db-xp { display: flex; flex-wrap: wrap; gap: 8px 18px; padding: 9px 14px; background: #0d141c; border: 1px dashed #26323f; border-radius: 8px; color: #a8b5c1; }
+.db-xp b { color: #e5edf5; margin-left: 4px; }
+.db-xp-total { margin-left: auto; color: #7ee8d8; } .db-xp-total b { color: #7ee8d8; }
+.db-cause { color: #e5edf5 !important; font-weight: 600; }
+.db-insight { padding: 8px 12px; background: #12202a; border-left: 3px solid #2dd4bf; border-radius: 4px; }
+.db-muted { color: #8ea0b0 !important; font-size: 11px; }
+.db-timeline { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; max-height: 240px; overflow: auto; }
+.db-timeline li { display: grid; grid-template-columns: 46px 110px 1fr auto; gap: 8px; align-items: center; padding: 4px 8px; background: #0f1822; border-radius: 5px; }
+.db-t { color: #8ea0b0; font-variant-numeric: tabular-nums; }
+.db-dev { color: #7cb7ff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.db-timeline code { color: #e5edf5; word-break: break-word; }
+.db-chip { font-style: normal; padding: 1px 7px; border-radius: 99px; font-size: 9px; text-transform: uppercase; letter-spacing: .05em; background: #1a2430; color: #a8b5c1; }
+.db-chip.change { background: #3a2a12; color: #f5c451; } .db-chip.inspect { background: #12332f; color: #7ee8d8; }
+.db-solution { display: grid; gap: 4px; } .db-solution b { color: #7cb7ff; font-size: 11px; }
+.db-solution pre { margin: 0; padding: 8px 10px; background: #0a1017; border: 1px solid #202a35; border-radius: 6px; color: #7ee8d8; font-size: 11px; white-space: pre-wrap; }
+.db-lesson { padding: 9px 12px; background: #2a2412; border-left: 3px solid #f5c451; border-radius: 4px; color: #f0dca0 !important; }
+.db-review { display: grid; gap: 6px; }
+.db-review div { display: grid; gap: 2px; padding: 7px 10px; background: #0f1822; border-radius: 6px; }
+.db-review code { color: #7ee8d8; font-size: 11px; } .db-review span { color: #a8b5c1; }
+.db-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 18px; border-top: 1px solid #1e2a36; }
+.db-foot .primary-action { flex: 1; max-width: 420px; }
+/* logbook */
+.lb-rank { display: grid; gap: 2px; padding: 12px 14px; background: #0f1822; border: 1px solid #1e2a36; border-radius: 10px; } .lb-rank b { font-size: 15px; } .lb-rank span { color: #8ea0b0; }
+.lb-stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+.lb-stats div { display: grid; gap: 2px; padding: 8px 4px; text-align: center; background: #0f1822; border: 1px solid #1e2a36; border-radius: 8px; }
+.lb-stats b { font-size: 14px; } .lb-stats b small { color: #8ea0b0; font-size: 10px; } .lb-stats span { font-size: 9px; color: #8ea0b0; text-transform: uppercase; letter-spacing: .05em; }
+.lb-topic { display: grid; grid-template-columns: 110px 1fr 34px; gap: 10px; align-items: center; color: #c3cdd7; } .lb-topic small { color: #8ea0b0; text-align: right; }
+.lb-bar { height: 6px; background: #1a2430; border-radius: 6px; overflow: hidden; } .lb-bar i { display: block; height: 100%; background: #2dd4bf; border-radius: 6px; }
+.lb-next, .lb-row { display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 12px; text-align: left; background: #0f1822; border: 1px solid #1e2a36; border-radius: 8px; color: #e5edf5; cursor: pointer; }
+.lb-next { border-color: #2dd4bf66; } .lb-next:hover, .lb-row:hover { border-color: #2dd4bf; }
+.lb-next span, .lb-row span { flex: 1; display: grid; gap: 2px; } .lb-next small, .lb-row small { color: #8ea0b0; }
+.lb-row .db-stars { font-size: 13px; letter-spacing: 1px; }
+.lab-restored { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 0 16px 8px; padding: 7px 12px; background: #12202a; border-left: 3px solid #2dd4bf; border-radius: 4px; color: #a8dfd8; font-size: 11px; }
+.ticket-progress { display: inline-block; margin-top: 2px; font-size: 10px; color: #7ee8d8; }

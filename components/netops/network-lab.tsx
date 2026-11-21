@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import { NetLab, type Store } from "@/lib/engine/netsim";
+import { useGame } from "@/lib/state/game-store";
+import { useLabSnapshots } from "@/lib/state/lab-snapshots";
 import type { Ticket } from "@/lib/data/tickets";
 import { placeOf } from "@/lib/data/world";
 import type { Scenario } from "@/lib/scenarios/types";
@@ -17,8 +18,11 @@ interface Props {
 
 /** Renders whatever scenario the ticket points at. Remount with key={ticket.id} to reset the lab. */
 export function NetworkLab({ ticket, scenario, store, passed, total, onBack }: Props) {
-  const [hints, setHints] = useState(0);
+  const hints = useGame((g) => g.hints[ticket.id] ?? 0);
+  const takeHint = useGame((g) => g.takeHint);
   const place = placeOf(ticket.deptId);
+  // keeps this ticket's lab saved, and restores it if you've been here before
+  const [restored, dismissRestored] = useLabSnapshots(ticket.id, store);
 
   return (
     <section className="lab-panel" aria-label="Department network lab">
@@ -35,6 +39,12 @@ export function NetworkLab({ ticket, scenario, store, passed, total, onBack }: P
         <span className={`priority-tag priority-${ticket.priority.toLowerCase()}`}><i />{ticket.priority} INCIDENT</span>
       </div>
 
+      {restored && (
+        <div className="lab-restored" role="status">
+          <span>↺ Picked up where you left off · {restored.commands} command{restored.commands === 1 ? "" : "s"} typed so far</span>
+          <button className="quiet-button" onClick={() => { store.reset(); dismissRestored(); }}>Start over</button>
+        </div>
+      )}
       {!scenario ? (
         <div className="lab-empty">
           <b>Lab not built yet</b>
@@ -48,31 +58,10 @@ export function NetworkLab({ ticket, scenario, store, passed, total, onBack }: P
               <span key={s.where}>{s.where}: {s.commands.map((c, i) => <span key={c}>{i > 0 && " · "}<code>{c}</code></span>)}</span>
             ))}
           </div>
-
-          {/* 👇 REPLACE THE OLD HINT BLOCK WITH THIS 👇 */}
-          <div className="lab-hints-container" style={{ marginBottom: "12px" }}>
-            {hints > 0 && (
-              <div className="lab-hint-box">
-                {scenario.hints.slice(0, hints).map((h, i) => (
-                  <div key={i}>
-                    <strong>Hint {i + 1}</strong>
-                    <div>{h}</div>
-                  </div>
-                ))}
-              </div>
-            )}
-            
-            <div style={{ display: "flex", gap: "8px", alignItems: "center", marginTop: "8px" }}>
-              <button 
-                className="quiet-button" 
-                onClick={() => setHints(hints + 1)}
-                disabled={hints >= scenario.hints.length}
-              >
-                {hints === 0 ? "Need a hint?" : hints >= scenario.hints.length ? "No more hints" : "Next hint"}
-              </button>
-            </div>
+          <div className="lab-hints">
+            {scenario.hints.slice(0, hints).map((h, i) => <span key={i}>Hint {i + 1}: {h}</span>)}
+            {hints < scenario.hints.length && <button className="quiet-button" onClick={() => takeHint(ticket.id)}>{hints ? "Another hint" : "Need a hint?"}</button>}
           </div>
-
           <div className="simulator-frame">
             <NetLab title={scenario.canvas.title} width={scenario.canvas.width} height={scenario.canvas.height} store={store}>
               <scenario.Topology />

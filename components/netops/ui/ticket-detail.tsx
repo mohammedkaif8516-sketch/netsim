@@ -9,7 +9,7 @@ import { secondsLeft, useGame } from "@/lib/state/game-store";
 import { Checklist } from "./checklist";
 
 export function TicketDetail({ ticket, scenario, results }: { ticket: Ticket; scenario?: Scenario; results: boolean[] }) {
-  const { now, deadlines, resolved, resolve, setView } = useGame();
+  const { now, deadlines, resolved, resolve, setView, openDebrief } = useGame();
   const place = placeOf(ticket.deptId);
   const done = !!resolved[ticket.id];
   const passed = results.filter(Boolean).length;
@@ -41,10 +41,10 @@ export function TicketDetail({ ticket, scenario, results }: { ticket: Ticket; sc
       <Checklist checks={scenario?.checks} results={results} />
       <div className="detail-actions">
         <button className="primary-action" onClick={() => setView("lab")}>Investigate ticket <ArrowRight /></button>
-        <button className="resolve-action" disabled={done || !allPass} title={done ? "Already resolved" : why}
-          onClick={() => scenario && resolve(ticket.id, scenario.xp)}><Check /> {done ? "Resolved" : "Mark resolved"}</button>
+        <button className="resolve-action" disabled={!done && !allPass} title={done ? "Open the debrief for this ticket" : why}
+          onClick={() => (done ? openDebrief(ticket.id) : scenario && resolve(ticket.id, scenario.xp))}><Check /> {done ? "Review debrief" : "Mark resolved"}</button>
       </div>
-      <div className="detail-footnote"><ShieldCheck /> {done ? "Closed. XP has been awarded." : why || "All checks pass. You can resolve this ticket."}</div>
+      <div className="detail-footnote"><ShieldCheck /> {done ? "Closed. See the debrief for what went wrong." : why || "All checks pass. You can resolve this ticket."}</div>
     </aside>
   );
 }
